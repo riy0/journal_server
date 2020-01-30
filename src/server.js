@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false, }));
 app.use(bodyParser.json());
 
 app.use('/api/v1/entries', router.entries);
@@ -26,7 +26,7 @@ app.use((error, req, res) => res.status(error.status || 404).json({
 
 if (!module.parent) {
   app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+    // console.log(`Listening on port ${port}`);
   });
 }
 

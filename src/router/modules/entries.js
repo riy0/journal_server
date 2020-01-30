@@ -9,7 +9,7 @@ router.get('/', (req, res) => res.status(200).json({
     },
     {
       title: 'clean my room',
-    },
+    }
   ],
 }));
 

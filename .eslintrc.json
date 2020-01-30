@@ -7,13 +7,19 @@
   "extends": "airbnb-base",
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
+    "console": false,
+    "$": false
   },
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
   "rules": {
+    "no-extra-semi": "warn",
+    "no-undef": "warn",
+    "quotes": ["warn", "single"],
+    "space-before-blocks": ["warn", { "functions": "always" }],
     "comma-dangle": [1, {
       "objects": "always",
       "arrays": "ignore",
