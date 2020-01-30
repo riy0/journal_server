@@ -18,12 +18,11 @@ app.use((req, res, next) => {
   error.status = 404;
   next(error);
 });
-app.use((error, req, res) =>
-  res.status(error.status || 404).json({
-    status: error,
-    message: error.message
-  })
-);
+
+app.use((error, req, res) => res.status(error.status || 404).json({
+  status: error,
+  message: error.message,
+}));
 
 if (!module.parent) {
   app.listen(port, () => {
