@@ -34,7 +34,10 @@ app.use(function(req, res, next) {
 
 app.use(function(error, req, res) {
   res.status(error.status || 404);
-  res.json({ status: error, message: error.message });
+  res.json({
+    status: error,
+    message: error.message == 'error found'
+  });
 });
 
 if (!module.parent) {
