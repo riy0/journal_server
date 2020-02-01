@@ -9,7 +9,7 @@ var _createClass = function () {
       if ("value" in descriptor)
         descriptor.writable = true;
       Object.defineProperty(target, descriptor.key, descriptor);
-    }
+    };
   }
   return function (Constructor, protoProps, staticProps) {
     if (protoProps)
@@ -20,14 +20,8 @@ var _createClass = function () {
   };
 }(); 
 
-var _store = require('../memory/store');
-var _store2 = _interopRequireDefault(_store);
-
-var _index = require('../model/index');
-var _index2 = _interopRequireDefault(_index);
-
-var _utils = require('../helpers/utils');
-var _utils2 = _interopRequireDefault(_utils);
+var _entryHandler = require('../handler/entryHandler');
+var _entryHandler2 = _interopRequireDefault(_entryHandler);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -43,47 +37,50 @@ var EntryController = function () {
   function EntryController() {
     _classCallCheck(this, EntryController);
 
-    this.entryStore = new _store2.default.Entry();
-    this.entries = [];
-    this.entry = {};
+    this.entry= new _entryHandler2.default.Entry();
   }
 
   _createClass(EntryController, [{
-    key: 'addEntry',
-    value: function addEntry(title, content) {
-      var id = _utils2.default.generateId();
-      var newEntry = new _index2.default.Entry(id, title, content, Date.now(), Date.now());
-      this.entry = this.entryStore.insert(newEntry.getEntry());
-      return this.entry;
+    key: 'create',
+    value: function create(req, res) {
+      var result = this.entry.addEntry(req.body.title, req.body.content);
+      res.status(200).json({
+        status: 'success',
+        data: result
+      })
     }
   },{
-    key: 'findEntry',
-    value: function findEntry(id) {
-      this.entry = this.entryStore.findOne(id);
-      return this.entry;
-    }
-  },{
-    key: 'getAllEntry',
-    value: function getAllEntry() {
-      this.entries = this.entryStore.findAll();
-      return this.entries;
-    }
-  }, {
-    key: 'updateEntry',
-    value: function updateEntry(id, body) {
-      var entry = this.entryStore.findOne(id);
-      if (entry !== null) {
-        var keys = Object.keys(entry);
-        var entryUpdate = {};
-        keys.forEach(function (key) {
-          entryUpdate[key] = body[key] !== undefined ? body[key] : entry[key];
-        });
-        entryUpdate.updated_at = Date.now();
-        this.entry = this.entryStore.update(id, entryUpdate);
+    key: 'getById',
+    value: function getById(req, res) {
+      // using obj destructring
+      var id = req.params.id;
 
-        return this.entry;
-      }
-      return null;
+      var result = this._entry.findEntry(id);
+      res.status(200).json({
+        status: 'success',
+        data: result
+      });
+    }
+  },{
+    key: 'getAll',
+    value: function getAll() {
+      var result = this.entry.getAll();
+      res.status(200).json({
+        status: 'success',
+        data: result
+      });
+    }
+  },{
+    key: 'update',
+    value: function update(req, res) {
+      var id = req.params.id;
+      var body = req.body;
+
+      var result = this._entry.updateEntry(id, body);
+      res.status(200).json({
+        status: 'success',
+        data: result
+      });
     }
   }]);
 

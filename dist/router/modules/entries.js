@@ -15,42 +15,22 @@ var entry = new _entryController2.default();
 
 //get entry by id
 router.get('/:id', function(req, res) {
-  var id = req.params.id;
-  var result = entry.findEntry(id);
-  res.status(200).json({
-    status: 'success',
-    data: result
-  });
+  entry.getById(req, res);
 });
 
 // get all
 router.get('/', function(req, res) {
-  var result = entry.getAllEntry();
-  res.status(200).json({
-    status: 'success',
-    data: result
-  });
+  entry.getAll(req, res);
 });
 
 // add an entry
 router.post('/', function (req, res) {
-  var result = entry.addEntry(req.body.title, req.body.content); 
-  res.status(200).json({
-    status: 'success',
-    data: result
-  });
+  entry.create(req, res);
 });
 
 // update
 router.put('/:id', function (req, res) {
-  var id = req.params.id;
-  var body = req.body;
-
-  var result = entry.updateEntry(id, body);
-  res.status(200).jsson({
-    status: 'success',
-    data: result
-  });
+  entry.update(req, res);
 });
 
 module.exports = router;

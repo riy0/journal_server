@@ -32,12 +32,13 @@ app.use(function(req, res, next) {
   next(error);
 });
 
-app.use(function(error, req, res) {
-  res.status(error.status || 404);
+app.use(function (error, req, res, next) {
+  res.status(error.status || 500);
   res.json({
-    status: error,
-    message: error.message == 'error found'
+    status: 'error',
+    message: error.message || 'An error occured'
   });
+  next();
 });
 
 if (!module.parent) {

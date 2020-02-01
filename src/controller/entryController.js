@@ -1,48 +1,46 @@
-import Store from '../memory/store';
-import Schema from '../model/index';
-import util from '../helpers/utils';
-
+import EntryHandler from '../handler/entryHandler';
 
 class EntryController {
   constructor() {
-    this.entryStore = new Store.Entry();
-    this.entries = [];
-    this.entry = {};
+    this.entry = new EntryHandler();
   }
 
-  addEntry(title, content) {
-    const id = util.generateId();
-    const newEntry = new Schema.Entry(id, title, content, Date.now(), Date.now());
-    this.entry = this.entryStore.insert(newEntry.getEntry());
-    return this.entry;
+  create(req, res) {
+    const result = this.entry.addEntry(req.body.title, req.body.content);
+    res.status(200).json({
+      status: 'success',
+      data: result,
+    });
   }
 
-  findEntry(id) {
-    this.entry = this.entryStore.findOne(id);
-    return this.entry;
-  }
-
-  getAllEntry() {
-    this.entries = this.entryStore.findAll();
-    return this.entries;
-  }
-
-  updateEntry(id, body) {
-    const entry = this.entryStore.findOne(id);
-    if (entry !== null) {
-      const keys = Object.keys(entry);
-      const entryUpdate = {};
-      keys.forEach((key) => {
-        // console.log(`body: ${body[key]}`);
-        // console.log(`entry: ${entry[key]}`);
-        entryUpdate[key] = (body[key] !== undefined) ? body[key] : entry[key];
+  getById(req, res) {
+    const { id, } = req.params;
+    const result = this.entry.findEntry(id);
+    res.status(200)
+      .json({
+        status: 'success',
+        data: result,
       });
-      entryUpdate.updated_at = Date.now();
-      this.entry = this.entryStore.update(id, entryUpdate);
+  }
 
-      return this.entry;
-    }
-    return null;
+  getAll(req, res) {
+    const result = this.entry.getAllEntry();
+    res.status(200)
+      .json({
+        status: 'success',
+        data: result,
+      });
+  }
+
+  update(req, res) {
+    const { id, } = req.params;
+    const { body, } = req;
+    const result = this.entry.updateEntry(id, body);
+    res.status(200)
+      .json({
+        status: 'success',
+        data: result,
+      });
   }
 }
 
