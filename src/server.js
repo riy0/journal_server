@@ -19,12 +19,13 @@ app.use((req, res, next) => {
   next(error);
 });
 
-app.use((error, req, res) => {
-  res.status(error.status || 404);
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
   res.json({
     status: error,
     message: error.message || 'error found',
   });
+  next();
 });
 
 if (!module.parent) {

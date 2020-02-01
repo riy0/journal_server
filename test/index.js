@@ -22,6 +22,12 @@ describe('/POST entries', () => {
     .end((err, res) => {
       res.should.have.status(200);
       res.body.data.should.be.a('object');
+      res.body.should.have.property('status');
+      res.body.status.should.equal('success');
+      res.body.should.have.property('data');
+      res.body.data.should.be.a('array');
+      res.body.data[0].should.be.a('object');
+
       done();
     });
   });
@@ -81,5 +87,17 @@ describe('/PUT/:id entries', () => {
           done();
         });
     });
+  });
+});
+
+describe('Invalid endpoint request', () => {
+  it('should return a 404 error with an error message', (done) => {
+    chai.request(server)
+      .get('/api/v1/entri')
+      .end((err, res) => {
+        res.body.should.have.property('status');
+        res.body.status.should.equal('error');
+        done();
+      });
   });
 });
