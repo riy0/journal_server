@@ -25,3 +25,10 @@ router.get('/:id', validate(Validation.Entry.getById), (req, res) => {
 router.put('/:id', validate(Validation.Entry.update), (req, res) => {
   entry.getById(req, res);
 });
+
+// delete entry
+router.delete('/:id', validate(Validation.Entry.delete), (req, res) => {
+  entry.delete(req, res);
+});
+
+module.exports = router;

@@ -23,6 +23,11 @@ class Entry {
     this.entries[id] = entry;
     return this.entries[id];
   }
+
+  delete(id) {
+    delete this.entries[id];
+    return this.entries[id];
+  }
 }
 
 module.exports = Entry;

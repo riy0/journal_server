@@ -36,7 +36,14 @@ var Entry = function () {
       this.entries[id] = entry;
       return this.entries[id];
     }
-  }]);
+  }, {
+    key: "delete",
+    value: function _delete(id) {
+      delete this.entries[id];
+      return this.entries[id];
+    }
+  }
+]);
 
   return Entry;
 }();

@@ -63,6 +63,17 @@ var EntryHandler = function () {
       }
       return null;
     }
+  }, {
+    key: 'deleteEntry',
+    value: function deleteEntry(id) {
+      var entry = this._entryStore.findOne(id);
+      if (entry !== null) {
+        this._entry = this._entryStore.delete(id);
+
+        return this._entry;
+      }
+      return null;
+    }
   }]);
 
   return EntryHandler;

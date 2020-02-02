@@ -53,6 +53,29 @@ class EntryController {
         });
     }
   }
+
+  delete(req, res) {
+    const { id, } = req.params;
+    const result = this.entry.deleteEntry(id);
+    // if item was deleted successully, it will return undefined
+    if (result !== null && result === undefined) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: {},
+        });
+    } else {
+      // has error property to match the pattern of validation error response
+      res.status(404)
+        .json({
+          status: 'error',
+          message: 'Unable to delete entry',
+          errors: [
+            'entry with id doesn\'t exist',
+          ],
+        });
+    }
+  }
 }
 
 module.exports = EntryController;

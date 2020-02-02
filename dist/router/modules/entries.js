@@ -40,4 +40,9 @@ router.put('/:id', (0, _expressValidation2.default)(_index2.default.Entry.update
   entry.update(req, res);
 });
 
+// delete entry
+router.delete('/:id', (0, _expressValidation2.default)(_index2.default.Entry.delete), function (req, res) {
+  entry.delete(req, res);
+});
+
 module.exports = router;

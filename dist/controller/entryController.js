@@ -91,6 +91,27 @@ var EntryController = function () {
         });
       }
     }
+  }, {
+    key: 'delete',
+    value: function _delete(req, res) {
+      var id = req.params.id;
+
+      var result = this._entry.deleteEntry(id);
+      // if item was deleted successully, it will return undefined
+      if (result !== null && result === undefined) {
+        res.status(200).json({
+          status: 'success',
+          data: {}
+        });
+      } else {
+        // has error property to match the pattern of validation error response
+        res.status(404).json({
+          status: 'error',
+          message: 'Unable to delete entry',
+          errors: ["entry with id doesn't exist"]
+        });
+      }
+    }
   }]);
 
   return EntryController;
