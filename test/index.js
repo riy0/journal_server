@@ -100,7 +100,7 @@ describe('/GET/:id entries', () => {
 describe('/PUT/:id entries', () => {
   const entryUpdate = {
     title: 'update test',
-    content: `update test test test test test test test test test test `,
+    content: ``,
   };
 
   it('should update an entry by a given id', (done) => {
@@ -144,36 +144,6 @@ describe('/PUT/:id entries', () => {
         res.body.errors.should.be.a('array');
         done();
       })
-  });
-});
-
-/**
- * TEST THE DELETE ENPOINT
- */
-describe('/DELETE/:id entries', () => {
-
-  it('should delete an entry by a given id', (done) => {
-    chai.request(server)
-      .delete(`/api/v1/entries/${id}`)
-      .end((error, response) => {
-        response.should.have.status(200);
-        response.body.should.be.a('object');
-        response.body.data.should.be.a('object');
-        done();
-      });
-  });
-
-  it('should return error when id of entry to delete is not found', (done) => {
-    chai.request(server)
-      .delete('/api/v1/entries/054c0398f7c70b2e')
-      .end((error, response) => {
-        response.should.have.status(404);
-        response.body.should.have.property('status');
-        response.body.status.should.equal('error');
-        response.body.should.have.property('errors');
-        response.body.errors.should.be.a('Array');
-        done();
-      });
   });
 });
 
