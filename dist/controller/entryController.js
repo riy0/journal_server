@@ -37,7 +37,7 @@ var EntryController = function () {
   function EntryController() {
     _classCallCheck(this, EntryController);
 
-    this.entry= new _entryHandler2.default.Entry();
+    this.entry= new _entryHandler2.default();
   }
 
   _createClass(EntryController, [{
