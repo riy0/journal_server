@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "test": "babel-node node_modules/mocha/bin/_mocha test/index.js",
+    "test": "babel-node node_modules/mocha/bin/_mocha test/*.js",
     "pretest": "eslint .",
     "lintfix": "eslint . --fix",
     "build": "npm run lintfix && babel src -d dist",
-    "cover": "babel-node ./node_modules/istanbul/lib/cli cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec --timeout 10000 test/index.js",
+    "cover": "babel-node ./node_modules/istanbul/lib/cli cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec --timeout 10000 test/*.js",
     "coveralls": "npm run cover -- --report lcovonly && ./coverage/lcov.info > ./node_modules/coveralls/bin/coveralls.js",
     "dev": "nodemon ./dist/server",
     "start": "node ./dist/server"

@@ -22,9 +22,7 @@ app.use((req, res, next) => {
 
 app.use((error, req, res, next) => {
   if (error instanceof expressValidation.ValidationError) {
-    // extract error messages from validation error
     const messages = error.errors.reduce((msg, obj) => {
-      // take the first error message of the property only
       msg.push(obj.messages[0]);
       return msg;
     }, []);

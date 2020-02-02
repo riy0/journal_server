@@ -55,7 +55,7 @@ var EntryController = function () {
       // using obj destructring
       var id = req.params.id;
 
-      var result = this._entry.findEntry(id);
+      var result = this.entry.findEntry(id);
       res.status(200).json({
         status: 'success',
         data: result
@@ -76,11 +76,20 @@ var EntryController = function () {
       var id = req.params.id;
       var body = req.body;
 
-      var result = this._entry.updateEntry(id, body);
-      res.status(200).json({
-        status: 'success',
-        data: result
-      });
+      var result = this.entry.updateEntry(id, body);
+
+      if (result !== null) {
+        res.status(200).json({
+          status: 'success',
+          data: result
+        });
+      } else {
+        res.status(404).json({
+          status: 'error',
+          message: 'Entry not found',
+          errors: ["entry with id doesn't exist"]
+        });
+      }
     }
   }]);
 

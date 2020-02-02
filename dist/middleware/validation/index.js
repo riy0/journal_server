@@ -1,7 +1,6 @@
 'use strict';
 
 var _entry = require('./modules/entry');
-
 var _entry2 = _interopRequireDefault(_entry);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

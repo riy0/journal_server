@@ -6,7 +6,6 @@ var _express2 = _interopRequireDefault(_express);
 var _expressValidation = require('express-validation');
 var _expressValidation2 = _interopRequireDefault(_expressValidation);
 
-
 var _morgan = require('morgan');
 var _morgan2 = _interopRequireDefault(_morgan);
 
@@ -38,9 +37,8 @@ app.use(function(req, res, next) {
 
 app.use(function (error, req, res, next) {
   if (error instanceof _expressValidation2.default.ValidationError) {
-    // extract error messages from validation error
     var messages = error.errors.reduce(function (msg, obj) {
-      // take the first error message of the property only
+      // first error message of the property only
       msg.push(obj.messages[0]);
       return msg;
     }, []);

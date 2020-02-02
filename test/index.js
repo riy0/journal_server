@@ -25,27 +25,21 @@ const invalidEntries = [
 
 let id = "";
 
-/* TEST THE POST ENDPOINT */
+/* TEST POST ENDPOINT */
 describe('/POST entries', () => {
   it('should create a new entry', (done) => {
     chai.request(server)
     .post('/api/v1/entries')
     .send(newEntry)
     .end((err, res) => {
+      id = res.body.data.id;
       res.should.have.status(200);
       res.body.data.should.be.a('object');
-      res.body.should.have.property('status');
-      res.body.status.should.equal('success');
-      res.body.should.have.property('data');
-      res.body.data.should.be.a('array');
-      res.body.data[0].should.be.a('object');
-
       done();
     });
   });
-
+  
   it('should return an error when any required property is not passed', (done) => {
-    /** generate random number between 0 and 1, 1 inclusive**/
     let i = Math.floor(Math.random() * 1);
     let invalidEntry = invalidEntries[i];
     chai.request(server)
@@ -60,8 +54,6 @@ describe('/POST entries', () => {
         done();
       })
   });
-
-
 });
 
 describe('/GET entries', () => {
@@ -81,44 +73,33 @@ describe('/GET entries', () => {
 describe('/GET/:id entries', () => {
   it('should get an entry by a given id', (done) => {
     chai.request(server)
-      .post('/api/v1/entries')
-      .send(newEntry)
-      .end((err, res) => {
-        chai.request(server)
-          .get(`/api/v1/entries/${res.body.data.id}`)
-          .end((error, response) => {
-            response.should.have.status(200);
-            response.body.should.be.a('object');
-            response.body.data.should.be.a('object');
-            done();
-          });
+    .get(`/api/v1/entries/${id}`)
+    .end((error, response) => {
+      response.should.have.status(200);
+      response.body.should.be.a('object');
+      response.body.data.should.be.a('object');
+      done();
       });
   });
 });
 
 describe('/PUT/:id entries', () => {
+  const entryUpdate = {
+    title: 'new test',
+    content: `test test test test test test test`,
+  };
+
   it('should update an entry by a given id', (done) => {
-    const entryUpdate = {
-      title: 'New Setting up testing',
-      content: `test test test test test test test
-        until the Andela circle 34 bootcamp challenge came in.`,
-    }
     chai.request(server)
-    .post('/api/v1/entries')
-    .send(newEntry)
-    .end((err, res) => {
-      id = res.body.data.id;
-      chai.request(server)
-        .put(`/api/v1/entries/${res.body.data.id}`)
-        .send(entryUpdate)
-        .end((error, response) => {
-          response.should.have.status(200);
-          response.body.should.be.a('object');
-          response.body.data.should.be.a('object');
-          done();
-        });
-    });
+      .put(`/api/v1/entries/${id}`)
+      .send(entryUpdate)
+      .end((error, response) => {
+        response.should.have.status(200);
+        response.body.should.have.property('status');
+        done();
+      });
   });
+
   it('should return an error when any required property is not passed', (done) => {
     let i = Math.floor(Math.random() * 1);
     let invalidEntry = invalidEntries[i];
@@ -133,6 +114,20 @@ describe('/PUT/:id entries', () => {
         res.body.errors.should.be.a('array');
         done();
       })
+  });
+
+  it('should return error when id is not found', (done) => {
+    chai.request(server)
+     .put('/api/v1/entries/')
+     .send(entryUpdate)
+     .end((error, response) => {
+        response.should.have.status(404);
+        response.body.should.have.property('status');
+        response.body.status.should.equal('error');
+        response.body.should.have.property('errors');
+        response.body.errors.should.be.a('Array');
+       done();
+     });
   });
 });
 
