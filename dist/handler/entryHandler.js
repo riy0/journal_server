@@ -4,15 +4,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 
 var _store = require('../memory/store');
-
 var _store2 = _interopRequireDefault(_store);
 
 var _index = require('../model/index');
-
 var _index2 = _interopRequireDefault(_index);
 
 var _utils = require('../helpers/utils');
-
 var _utils2 = _interopRequireDefault(_utils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -23,9 +20,9 @@ var EntryHandler = function () {
   function EntryHandler() {
     _classCallCheck(this, EntryHandler);
 
-    this._entryStore = new _store2.default.Entry();
+    this.entryStore = new _store2.default.Entry();
     this.entries = [];
-    this._entry = {};
+    this.entry = {};
   }
 
   _createClass(EntryHandler, [{
@@ -33,25 +30,25 @@ var EntryHandler = function () {
     value: function addEntry(title, content) {
       var id = _utils2.default.generateId();
       var newEntry = new _index2.default.Entry(id, title, content, Date.now(), Date.now());
-      this._entry = this._entryStore.insert(newEntry.getEntry());
-      return this._entry;
+      this.entry = this._entryStore.insert(newEntry.getEntry());
+      return this.entry;
     }
   }, {
     key: 'findEntry',
     value: function findEntry(id) {
-      this._entry = this._entryStore.findOne(id);
-      return this._entry;
+      this.entry = this.entryStore.findOne(id);
+      return this.entry;
     }
  }, {
     key: 'getAllEntry',
     value: function getAllEntry() {
-      this._entries = this._entryStore.findAll();
-      return this._entries;
+      this.entries = this._entryStore.findAll();
+      return this.entries;
     }
  }, {
     key: 'updateEntry',
     value: function updateEntry(id, body) {
-      var entry = this._entryStore.findOne(id);
+      var entry = this.entryStore.findOne(id);
       if (entry !== null) {
         var keys = Object.keys(entry);
         var entryUpdate = {};
@@ -60,9 +57,9 @@ var EntryHandler = function () {
         });
         // update date
         entryUpdate.updated_at = Date.now();
-        this._entry = this._entryStore.update(id, entryUpdate);
+        this.entry = this.entryStore.update(id, entryUpdate);
 
-        return this._entry;
+        return this.entry;
       }
       return null;
     }

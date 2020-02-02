@@ -3,7 +3,7 @@ node_js:
   - "stable"
 install:
   - npm install
-sudo: false 
+# sudo: false 
 script: npm run pretest
 cache:
   directories:

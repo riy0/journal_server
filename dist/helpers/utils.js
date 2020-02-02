@@ -21,7 +21,6 @@ var _createClass = function () {
 }();
 
 var _crypto = require('crypto');
-
 var _crypto2 = _interopRequireDefault(_crypto);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
