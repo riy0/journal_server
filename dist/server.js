@@ -27,6 +27,13 @@ app.use((0, _morgan2.default)('dev'));
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use(_bodyParser2.default.json());
 
+app.all('/*', function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-type, Accept, X-Access-Token, X-Key');
+  next();
+});
+
 app.use('/api/v1/entries', _index2.default.entries);
 
 app.use(function(req, res, next) {
