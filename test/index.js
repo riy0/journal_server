@@ -148,6 +148,36 @@ describe('/PUT/:id entries', () => {
 });
 
 /**
+ * TEST THE DELETE ENPOINT
+ */
+describe('/DELETE/:id entries', () => {
+
+  it('should delete an entry by a given id', (done) => {
+    chai.request(server)
+      .delete(`/api/v1/entries/${id}`)
+      .end((error, response) => {
+        response.should.have.status(200);
+        response.body.should.be.a('object');
+        response.body.data.should.be.a('object');
+        done();
+      });
+  });
+
+  it('should return error when id of entry to delete is not found', (done) => {
+    chai.request(server)
+      .delete('/api/v1/entries/054c0398f7c70b2e')
+      .end((error, response) => {
+        response.should.have.status(404);
+        response.body.should.have.property('status');
+        response.body.status.should.equal('error');
+        response.body.should.have.property('errors');
+        response.body.errors.should.be.a('Array');
+        done();
+      });
+  });
+});
+
+/**
  * TEST AN INVALID ENPOINT 
  */
 describe('Invalid endpoint request', () => {
