@@ -24,6 +24,7 @@ app.all('/*', (req, res, next) => {
 });
 
 app.use('/api/v1/entries', router.entries);
+app.use('/api/v1/users', router.users);
 
 app.use((req, res, next) => {
   const error = new Error('Not Found');

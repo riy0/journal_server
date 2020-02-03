@@ -3,8 +3,19 @@ node_js:
   - "stable"
 install:
   - npm install
+before_script:
+  - npm run migrate
 # sudo: false 
 script: npm run pretest
+services: postgresql
+postgres:
+  adapter: postgresql
+  database: journal_test
+  username: postgres
+env: 
+  global:
+    - PGPORT=4321
+    - DATABASE_URL=<% ENV.fetch('DATABASE_URL', 'postgresql://localhost:4321/journal_test') %>
 cache:
   directories:
     - "node_modules"
