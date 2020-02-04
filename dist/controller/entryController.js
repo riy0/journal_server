@@ -145,10 +145,7 @@ var EntryController = function (_clientController) {
 
       this._client.query('DELETE FROM entries WHERE id=($1) AND user_id=($2)', [id, req.userData.id]).then(function (result) {
         if (result.rowCount > 0) {
-          res.status(204).json({
-            status: 'success',
-            data: result.rows
-          });
+          res.status(204);
         } else {
           var error = new Error("Entry doesn't exist");
           error.status = 404;
