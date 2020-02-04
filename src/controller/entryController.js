@@ -1,16 +1,30 @@
+/* eslint no-underscore-dangle: 0 */
 import EntryHandler from '../handler/entryHandler';
+import ClientController from './clientController';
 
-class EntryController {
+class EntryController extends ClientController{
   constructor() {
+    super();
     this.entry = new EntryHandler();
   }
 
-  create(req, res) {
-    const result = this.entry.addEntry(req.body.title, req.body.content);
-    res.status(200).json({
-      status: 'success',
-      data: result,
-    });
+  create(req, res, next) {
+    const action = 'INSERT INTO entries(title, content, user_id, created_at, updated_at) VALUES($1, $2, $3, $4, $5) RETURNING title, content, user_id, created_at, updated_at ';
+    const values = [req.body.title, req.body.content, req.userData.id, 'NOW()', 'NOW()'];
+    const query = {
+      text: action,
+      values,
+    };
+    this._client.query(query)
+      .then((result) => {
+        res.status(201)
+          .json({
+            status: 'success',
+            data: result.rows[0],
+          });
+      }).catch((e) => {
+        next(e);
+      });
   }
 
   getById(req, res) {
@@ -65,7 +79,6 @@ class EntryController {
           data: {},
         });
     } else {
-      // has error property to match the pattern of validation error response
       res.status(404)
         .json({
           status: 'error',

@@ -47,6 +47,7 @@ class UserController {
               if (val) {
                 const token = jwt.sign(
                   {
+                    id: data.id,
                     email: data.email,
                     username: data.username,
                   },

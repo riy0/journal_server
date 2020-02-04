@@ -12,8 +12,9 @@ script: npm run pretest
 #  adapter: postgresql
 #  database: journal_test
 #  username: postgres
-#env: 
-#  global:
+env: 
+  global:
+    - JWT_AUTH_TOKEN_TEST= ***
 #    - PGPORT=4321
 #    - DATABASE_URL=<% ENV.fetch('DATABASE_URL', 'postgresql://localhost:4321/journal_test') %>
 cache:
