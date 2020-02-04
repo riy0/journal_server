@@ -3,7 +3,7 @@
 var _entries = require('./modules/entries');
 var _entries2 = _interopRequireDefault(_entries);
 
-var _users = require('../modules/users');
+var _users = require('./modules/users');
 var _users2 = _interopRequireDefault(_users);
 
 function _interopRequireDefault(obj) {

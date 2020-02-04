@@ -13,7 +13,6 @@ var _bodyParser = require('body-parser');
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
 var _index = require('./router/index');
-
 var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) {
@@ -50,7 +49,6 @@ app.use(function(req, res, next) {
 app.use(function (error, req, res, next) {
   if (error instanceof _expressValidation2.default.ValidationError) {
     var messages = error.errors.reduce(function (msg, obj) {
-      // first error message of the property only
       msg.push(obj.messages[0]);
       return msg;
     }, []);

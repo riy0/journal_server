@@ -22,6 +22,11 @@ function _interopRequireDefault(obj) {
   router.post('/signup', (0, _expressValidation2.default)(_index2.default.User.signup), function (req, res, next) {
     user.create(req, res, next);
   });
+
+  // login user
+  router.post('login', (0, _expressValidation2.default)(_index2.default.User.login), function(req, res, next) {
+    User.login(req, res, next);
+  });
   
   module.exports = router; 
 

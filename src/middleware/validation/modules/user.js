@@ -10,4 +10,10 @@ User.signup = {
   },
 };
 
+User.login = {
+  body: {
+    email: Joi.string().regex(/^[a-zA-Z0-9]{3, 100}$/).required(),
+  },
+};
+
 module.exports = User;

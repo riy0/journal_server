@@ -29,6 +29,7 @@ describe('/POST entries', () => {
   it('should create a new entry', (done) => {
     chai.request(server)
       .post('/api/v1/entries')
+      .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
       .send(newEntry)
       .end((err, res) => {
         id = res.body.data.id;
@@ -45,6 +46,7 @@ describe('/POST entries', () => {
     let invalidEntry = invalidEntries[i];
     chai.request(server)
       .post('/api/v1/entries')
+      .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
       .send(invalidEntry)
       .end((err, res) => {
         res.should.have.status(400);
@@ -65,6 +67,7 @@ describe('/GET entries', () => {
   it('should get all the entries', (done) => {
     chai.request(server)
       .get('/api/v1/entries')
+      .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
@@ -85,6 +88,7 @@ describe('/GET/:id entries', () => {
   it('should get an entry by a given id', (done) => {
     chai.request(server)
       .get(`/api/v1/entries/${id}`)
+      .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
       .end((error, response) => {
         response.should.have.status(200);
         response.body.should.be.a('object');
@@ -106,6 +110,7 @@ describe('/PUT/:id entries', () => {
   it('should update an entry by a given id', (done) => {
     chai.request(server)
       .put(`/api/v1/entries/${id}`)
+      .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
       .send(entryUpdate)
       .end((error, response) => {
         response.should.have.status(200);
@@ -135,6 +140,7 @@ describe('/PUT/:id entries', () => {
     let invalidEntry = invalidEntries[i];
     chai.request(server)
       .put(`/api/v1/entries/${id}`)
+      .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
       .send(invalidEntry)
       .end((err, res) => {
         res.should.have.status(400);
@@ -154,6 +160,7 @@ describe('Invalid endpoint request', () => {
   it('should return a 404 error with an error message', (done) => {
     chai.request(server)
       .get('/api/v1/entri')
+      .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
       .end((err, res) => {
         res.body.should.have.property('status');
         res.body.status.should.equal('error');

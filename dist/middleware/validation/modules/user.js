@@ -25,4 +25,11 @@ User.signup = {
   }
 };
 
+User.login = {
+  body:{
+    email: _joi2.default.string().email().required(),
+    password: _joi2.default.string().regex(/^[a-zA-Z0-9]{3,100}$/).required()
+  } 
+}
+
 module.exports = User; 

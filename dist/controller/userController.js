@@ -8,6 +8,9 @@ var _dotenv2 = _interopRequireDefault(_dotenv);
 var _bcrypt = require('bcrypt');
 var _bcrypt2 = _interopRequireDefault(_bcrypt);
 
+var _jsonwebtoken = require('jsonwebtoken');
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
 var _pg = require('pg');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -51,7 +54,41 @@ var UserController = function () {
         next(err);
       });
     }
-  }]);
+  }, {
+    key: 'login',
+    value: function login(req, res, next) {
+      var _req$body = req.body, email = _req$body.email, password = _req$body.password;
+
+      this._client.query('SELECT id, username, email, password, FROM users WHERE email=($1)m[email]').then(function (result) {
+        if (result.rowCount > 0) {
+          var data = result.rows[0];
+          _bcrypt2.default.compare(password, data.password).then(function (val) {
+            if(val) {
+              var token = _jsonwebtoken2.default.sign({
+                email: data.email, 
+                username: data.username
+              }, process.env.JWT_KEY, {
+                expiresIn: process.env.JWT_EXPIRY
+              });
+              delete data.password;
+              data.token = token;
+              res.status(200).json({
+                status: 'success',
+                data: data
+              });
+            } else {
+              var error = new Error('not match any record');
+              error.status = 401;
+              next(error);
+            }
+          }).catch(function (e) {
+            next(e);
+          });
+        }
+      });
+    }
+  }
+]);
 
   return UserController;
 }();
