@@ -13,13 +13,13 @@ Entry.create = {
 
 Entry.getById = {
   params: {
-    id: Joi.string().max(16).required(),
+    id: Joi.number().required(),
   },
 };
 
 Entry.update = {
   params: {
-    id: Joi.string().max(16).required(),
+    id: Joi.number().required(),
   },
   body: {
     title: Joi.string().required(),
@@ -29,7 +29,7 @@ Entry.update = {
 
 Entry.delete = {
   params: {
-    id: Joi.string().max(16).required(),
+    id: Joi.number().required(),
   },
 };
 
