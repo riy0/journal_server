@@ -20,9 +20,6 @@ var _createClass = function () {
   };
 }(); 
 
-var _entryHandler = require('../handler/entryHandler');
-var _entryHandler2 = _interopRequireDefault(_entryHandler);
-
 var _clientController = require('./clientController');
 var _clientController2 = _interopRequireDefault(_clientController);
 
@@ -45,10 +42,7 @@ var EntryController = function (_clientController) {
   function EntryController() {
     _classCallCheck(this, EntryController);
 
-    var _this = _possibleConstructorReturn(this, (EntryController.__proto__ || Object.getPrototypeOf(EntryController)).call(this));
-
-    _this._entry = new _entryHandler2.default();
-    return _this;
+    return _possibleConstructorReturn(this, (EntryController.__proto__ || Object.getPrototypeOf(EntryController)).apply(this, arguments));
   }
 
   _createClass(EntryController, [{
@@ -71,66 +65,98 @@ var EntryController = function (_clientController) {
     }
   },{
     key: 'getById',
-    value: function getById(req, res) {
-      // using obj destructring
+    value: function getById(req, res, next) {
       var id = req.params.id;
-
-      var result = this.entry.findEntry(id);
-      res.status(200).json({
-        status: 'success',
-        data: result
+      this._client.query('SELECT * FROM entries WHERE id =($1) AND user_id =($2)', [id, req.userData.id]).then(function (result) {
+        if(result.rowCount > 0) {
+          res.status(200).json({
+            status: 'success',
+            data: result.rows[0]
+          });
+        } else {
+          var error = new Error("Entry doesn't exist");
+          error.status = 404;
+          next(error);
+        }
+      }).catch(function (e) {
+        next(e);
       });
     }
   },{
     key: 'getAll',
     value: function getAll() {
-      var result = this.entry.getAll();
-      res.status(200).json({
-        status: 'success',
-        data: result
+      this._client.query('SELECT * FROM entries WHERE user_id=($1) ORDER BY id DESC', [req.userData.id]).then(function (result) {
+        res.status(200).json({
+          status: 'success',
+          data: result.rows || []
+        });
       });
     }
   },{
     key: 'update',
-    value: function update(req, res) {
+    value: function update(req, res, next) {
       var id = req.params.id;
       var body = req.body;
 
-      var result = this.entry.updateEntry(id, body);
+      var _this2 = this;
 
-      if (result !== null) {
-        res.status(200).json({
-          status: 'success',
-          data: result
-        });
-      } else {
-        res.status(404).json({
-          status: 'error',
-          message: 'Entry not found',
-          errors: ["entry with id doesn't exist"]
-        });
-      }
+      var q = 'SELECT date_part(\'day\', created_at) as created_day, date_part(\'month\', created_at) as created_month,date_part(\'year\', created_at) as created_year, date_part(\'day\', CURRENT_DATE) as this_day, date_part(\'month\', CURRENT_DATE) as this_month, date_part(\'year\', CURRENT_DATE) as this_year FROM entries WHERE id=($1) AND user_id=($2)';
+      var v = [id, req.userData.id];
+      var selectQuery = {
+        text: q,
+        values: v
+      };
+      this._client.query(selectQuery).then(function (result) {
+        if(result.rowCount > 0){
+          if(result.rows[0].created_day === result.rows[0].this_day && result.rows[0].created_month === result.rows[0].this_month && result.rows[0].created_year === result.rows[0].this_year) {
+            var action = 'UPDATE entries SET title=($1), content=($2), updated_at=($3)\n              WHERE id=($4) AND user_id=($5) RETURNING *';
+            var values = [body.title, body.content, 'NOW()', id, req.userData.id];
+            var updateQuery = {
+              text: action,
+              values: values
+            };
+            _this2._client.query(updateQuery).then(function (output) {
+              res.status(200).json({
+                status: 'success',
+                data: output.rows[0]
+              });
+            }).catch(function (err) {
+              next(err);
+            });
+          } else {
+            res.status(400).json({
+              status: 'error',
+              message: 'entry can only be updated the same day'
+            });
+          }
+        } else {
+          var error = new Error("Entry doesn't exist");
+          error.status = 404;
+          next(error);
+        }
+      }).catch(function (e) {
+        next(e);
+      });
     }
   }, {
     key: 'delete',
-    value: function _delete(req, res) {
+    value: function _delete(req, res, next) {
       var id = req.params.id;
 
-      var result = this._entry.deleteEntry(id);
-      // if item was deleted successully, it will return undefined
-      if (result !== null && result === undefined) {
-        res.status(200).json({
-          status: 'success',
-          data: {}
-        });
-      } else {
-        // has error property to match the pattern of validation error response
-        res.status(404).json({
-          status: 'error',
-          message: 'Unable to delete entry',
-          errors: ["entry with id doesn't exist"]
-        });
-      }
+      this._client.query('DELETE FROM entries WHERE id=($1) AND user_id=($2)', [id, req.userData.id]).then(function (result) {
+        if (result.rowCount > 0) {
+          res.status(204).json({
+            status: 'success',
+            data: result.rows
+          });
+        } else {
+          var error = new Error("Entry doesn't exist");
+          error.status = 404;
+          next(error);
+        }
+      }).catch(function (e) {
+        next(e);
+      });
     }
   }]);
 

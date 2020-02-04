@@ -24,8 +24,8 @@ var router = _express2.default.Router();
 var entry = new _entryController2.default();
 
 //get entry by id
-router.get('/:id', [_auth2.default.isValid,(0, _expressValidation2.default)(_index2.default.Entry.getById)], function (req, res) {
-  entry.getById(req, res);
+router.get('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.getById)], function (req, res, next) {
+  entry.getById(req, res, next);
 });
 
 // get all
@@ -39,13 +39,13 @@ router.post('/', [_auth2.default.isValid,(0, _expressValidation2.default)(_index
 });
 
 // update
-router.put('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.update)], function (req, res) {
-  entry.update(req, res);
+router.put('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.update)], function (req, res, next) {
+  entry.update(req, res, next);
 });
 
 // delete entry
-router.delete('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.delete)], function (req, res) {
-  entry.delete(req, res);
+router.delete('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.delete)], function (req, res, next) {
+  entry.delete(req, res, next);
 });
 
 module.exports = router;

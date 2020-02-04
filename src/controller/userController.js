@@ -2,19 +2,11 @@
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Client } from 'pg';
+import ClientController from './clientController';
 
 dotenv.config();
 
-class UserController {
-  constructor() {
-    this._connectionString = process.env.DATABASE_URL;
-    this._client = new Client({
-      connectionString: this._connectionString,
-    });
-    this._client.connect();
-  }
-
+class UserController extends ClientController{
   create(req, res, next) {
     bcrypt.hash(req.body.password, 10).then((hash) => {
       const action = 'INSERT INTO users(username, email, password, created_at, updated_at) VALUES($1, $2, $3, $4, $5) RETURNING username, email, created_at, updated_at';

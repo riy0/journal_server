@@ -8,8 +8,8 @@ const router = express.Router();
 const entry = new EntryController();
 
 // get all entries
-router.get('/', auth.isvalid, (req, res) => {
-  entry.getAll(req, res);
+router.get('/', auth.isvalid, (req, res, next) => {
+  entry.getAll(req, res, next);
 });
 
 // add a new entry
@@ -18,18 +18,18 @@ router.post('/', [auth.isValid, validate(Validation.Entry.create)], (req, res, n
 });
 
 // get entry by id
-router.get('/:id', [auth.isValid, validate(Validation.Entry.getById)], (req, res) => {
-  entry.create(req, res);
+router.get('/:id', [auth.isValid, validate(Validation.Entry.getById)], (req, res, next) => {
+  entry.create(req, res, next);
 });
 
 // update entry
-router.put('/:id', [auth.isValid, validate(Validation.Entry.update)], (req, res) => {
-  entry.getById(req, res);
+router.put('/:id', [auth.isValid, validate(Validation.Entry.update)], (req, res, next) => {
+  entry.getById(req, res, next);
 });
 
 // delete entry
-router.delete('/:id', [auth.isValid, validate(Validation.Entry.delete)], (req, res) => {
-  entry.delete(req, res);
+router.delete('/:id', [auth.isValid, validate(Validation.Entry.delete)], (req, res, next) => {
+  entry.delete(req, res, next);
 });
 
 module.exports = router;
