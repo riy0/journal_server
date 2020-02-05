@@ -51,6 +51,10 @@ var UserController = function () {
             data: result.rows[0]
           });
         }).catch(function (e) {
+          if (parseInt(e.code, 10) === 23505) {
+            e.status = 409;
+            e.message = 'Sorry, an account with this email already exist';
+          }
           next(e);
         });
       }).catch(function (err) {

@@ -21,6 +21,10 @@ class UserController extends ClientController{
           data: result.rows[0],
         });
       }).catch((e) => {
+        if (parseInt(e.code, 10) === 23505) {
+          e.status = 409;
+          e.message = 'an account with this email already exist';
+        }
         next(e);
       });
     }).catch((err) => {

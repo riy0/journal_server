@@ -14,7 +14,7 @@ script: npm run pretest
 #  username: postgres
 env: 
   global:
-    - JWT_AUTH_TOKEN_TEST= ***
+    DATABASE_URL=	postgres://qsvnecfe:gugOIO...@arjuna.db.elephantsql.com:5432/qsvnecfe
 #    - PGPORT=4321
 #    - DATABASE_URL=<% ENV.fetch('DATABASE_URL', 'postgresql://localhost:4321/journal_test') %>
 cache:
