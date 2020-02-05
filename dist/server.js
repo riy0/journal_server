@@ -15,6 +15,13 @@ var _bodyParser2 = _interopRequireDefault(_bodyParser);
 var _index = require('./router/index');
 var _index2 = _interopRequireDefault(_index);
 
+var _swaggerUiExpress =  require('swagger-ui-express');
+var _swaggerUiExpress2 = _interopRequireDefault(_swaggerUiExpress);
+
+var _swagger = require('../swagger.json');
+var _swagger2 = _interopRequireDefault(_swagger);
+
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -39,6 +46,7 @@ app.all('/*', function (req, res, next) {
 
 app.use('/api/v1/entries', _index2.default.entries);
 app.use('/api/v1/auth', _index2.default.users);
+app.use('/api-docs', _swaggerUiExpress2.default.serve, _swaggerUiExpress2.default.setup(_swagger2.default));
 
 app.use(function(req, res, next) {
   var error = new Error('Not Found');
