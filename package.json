@@ -12,7 +12,7 @@
     "dev": "nodemon ./dist/server",
     "lintfix": "eslint . --fix",
     "db": "node ./dist/dbconfig/database.js",
-    "pretest": "eslint .",
+    "pretest": "eslint . && npm run build",
     "start": "node ./dist/server",
     "test": "babel-node node_modules/mocha/bin/_mocha test/*.js --exit"
   },
