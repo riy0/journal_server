@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); 
 
 var _dotenv = require('dotenv');
@@ -24,13 +28,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 _dotenv2.default.config();
 
-var UserController = function () {
-  function UserController(_ClientController) {
-    _inherits(UserController, _ClientController);
+var UserController = function (_ClientController) {
+  _inherits(UserController, _ClientController);
+
+  function UserController() {
     _classCallCheck(this, UserController);
-
     return _possibleConstructorReturn(this, (UserController.__proto__ || Object.getPrototypeOf(UserController)).apply(this, arguments));
-
   }
 
   _createClass(UserController, [{
@@ -93,6 +96,29 @@ var UserController = function () {
             next(e);
           });
         }
+      });
+    }
+  }, {
+    key: 'update',
+    value: function update(req, res, next) {
+      var _req$body2 = req.body,
+          username = _req$body2.username,
+          email = _req$body2.email;
+
+      var favouriteQuote = Object.prototype.hasOwnProperty.call(req.body, 'fav_quote') ? req.body.fav_quote : null;
+      var text = 'UPDATE users SET fullname=($1), email=($2), fav_quote=($3), updated_at=($4) WHERE id=($5) RETURNING id, username, email, fav_quote';
+      var values = [username, email, favouriteQuote, 'NOW()', req.userData.id];
+      var query = {
+        text: text,
+        values: values
+      };
+      this._client.query(query).then(function (result) {
+        res.status(200).json({
+          status: 'success',
+          data: result.rows[0]
+        });
+      }).catch(function (e) {
+        next(e);
       });
     }
   }

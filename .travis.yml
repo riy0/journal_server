@@ -3,18 +3,20 @@ node_js:
   - "stable"
 install:
   - npm install
-# before_script:
-#  - npm run migrate
+before_script:
+  - psql -c 'drop database if exists journaldbtest;' -U postgres
+  - psql -c 'create database journaldbtest;' -U postgres
+  - npm run db 
 # sudo: false 
 script: npm run pretest
-# services: postgresql
+services: postgresql
 # postgres:
 #  adapter: postgresql
 #  database: journal_test
 #  username: postgres
 env: 
   global:
-    DATABASE_URL=	postgres://qsvnecfe:gugOIO...@arjuna.db.elephantsql.com:5432/qsvnecfe
+    DATABASE_URL=	postgres://postgres:@localhost:4321/journaldbtest
 #    - PGPORT=4321
 #    - DATABASE_URL=<% ENV.fetch('DATABASE_URL', 'postgresql://localhost:4321/journal_test') %>
 cache:

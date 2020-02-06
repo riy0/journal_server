@@ -19,6 +19,7 @@ var ClientController = function ClientController() {
   this._client = new _pg.Client({
     connectionString: this._connectionString
   });
+  this._client.connect();
 };
 
 module.exports = ClientController;
