@@ -1,21 +1,104 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Slab|Titillium+Web|Lato');
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
 
-img {
-  display: block;
-  width: 100%;
+body{
+    font-family: 'Indie Flower', cursive;
+    margin: 0;
+    background: #eee;
+    height: auto;
+}
+h1 {
+    font-weight: 600;
+    font-size: 4.0rem;
+}
+#landing-text h1{
+    font-family: 'Indie Flower', cursive;
+}
+#landing-text h1 a {
+    color: #FAEDB8;
+    text-decoration: none
+}
+h2 {
+    font-weight: 400;
+    font-size: 1.8rem;
+    margin: 0;
 }
 main {
-  margin: auto;
-  box-shadow: 30px 0px 40px rgba(0,0,0,0.2), 
-      -30px 0px 40px rgba (0,0,0,0.2);
+    margin: auto;
+}
+#landing {
+    background-image:url('../images/landing.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+#landing-text {
+    display: flex;
+    flex: 0 1 50vw;
+    height: 100vh;
+    justify-content: center; /*center horizontal*/
+    align-items: center; /* center vertical*/
+    text-align: center;
+    background: rgba(50, 50, 50, 0.4);
+}
+#landing-text h2 {
+    color: #fff;
+    font-family: 'Indie Flower', cursive;
+}
+.btn {
+    font-size: 1.2rem;
+    padding: 0.5rem 2rem;
+    border: 1px solid transparent;
+    display: inline-block;
+    margin: 2.5rem 0.5rem 0.5rem;
+    border-radius: 1000px;
+    text-decoration: none;
+    color: #fff;
+    transition: background 500ms ease;
+    background: #FF4B2B;
+    opacity: 0.8;
+}
+.btn:hover {
+    background: #FF416C;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);  
+background: linear-gradient(to right, #FF4B2B, #FF416C); 
+
 }
 
-#landing-image {
-  background: url('../images/landing.jpg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  flex: 0 1 50vw;
-  height: 50vh;
-  margin: 0;
+#get-started {
+    background: #0ED2F7; 
 }
+#get-started:hover {
+    background: #B2FEFA;
+    background: -webkit-linear-gradient(to right, #0ED2F7, #B2FEFA); 
+    background: linear-gradient(to right, #0ED2F7, #B2FEFA); 
+}
+#header {
+    padding: 1.5rem;
+    text-align: center;
+    background: #ccc;
+    color: #fff;
+}
+#header h2 {
+    border-left: dotted 1px #fff;
+    border-right: dotted 1px #fff;
+    display: inline-block;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+.captions {
+    padding: 0.8rem;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin: auto;
+    color: #333;
+}
+footer h3 {
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+

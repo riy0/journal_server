@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+/** Login Styles **/
+body{
+    font-family: 'Indie Flower', cursive;
+    margin: 0;
+    padding: 0;
+    background: #F7F8F8;
+}
+header #site-name a{
+    font-family: 'Indie Flower', cursive;
+    font-weight: 400;
+    font-size: 2rem;
+    color: black;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #F7F8F8;
+    padding: 0.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+nav a {
+    text-decoration: none;
+    color: black;
+    margin-right: 8px;
+}
+nav a:hover{
+    color: #FAEDB8;
+}
+nav a.nav-item{
+    font-size: 1rem;
+    border: 1px solid black;
+    margin: auto;
+    padding: 8px 12px;
+}
+nav a.nav-item#login{
+    font-size: 1rem;
+    color: black;
+    background-color: #FAEDB8;
+}
+nav a.nav-item#login:hover{
+    background-color: transparent;
+    color: #FAEDB8;
+}
+
+.nav-links .btn {
+    padding: 0.5rem;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-size: 1rem;
+}
+
+main {
+    margin: auto;
+    margin-top: 100px;
+}
+#cover-area #profile-image{
+    margin-bottom: -40px;
+}
+#cover-area #profile-image #avatar {
+    display: inline-block;
+    width: 100px;
+    width: 100px;
+    border-radius: 50%;
+    border: 3px solid grey;
+}
+
+#cover-area h1{
+    font-size: 2.0rem;
+}
+#cover-area #fav-quote{
+    color: #333;
+    font-size: 1.1rem;
+}
+#cover-area #fav-quote i{
+    font-size: 0.8rem;
+}
+#cover-area .entries-count{
+    font-size: 1.1rem;
+}
+#cover-area .entries-count .no{
+    font-size: 1.6rem;
+    color: #ddd;
+}
+
+#settings-box{
+    overflow: hidden;
+    padding: 25px 20px;
+    width: 80%;
+    margin: 50px auto;
+    background: #acb6e5;
+    color: #fff;
+}
+.s-input{
+    font-family: 'Indie Flower', cursive;
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 10px 9px;
+    font-size: 0.8rem;
+    background: #fff;
+    border: 1px solid transparent;
+    color: #4286f4;
+    border-radius: 3px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -o-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.settings-action{
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end
+}
+.s-btn{
+    display: block;
+    margin-right: 40px;
+    -webkit-appearance: none;
+    font-size: 1rem;
+    text-shadow: none;
+    line-height: 1.1;
+    display: inline-block;
+    outline: 0;
+    padding: 8px 10px;
+    border-radius: 3px;
+    border: 3px solid transparent;
+    color: white;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    text-align: center;
+    font-weight: normal;
+}
+
+#edit-profile-btn{
+    background: #4286f4;
+    border-top: 3px solid #ccc;
+}
+#edit-profile-btn:hover {
+    border-top: 3px solid #FAEDB8;
+}
+#save-profile-btn{
+    background: #4286f4;
+    border-top: 3px solid #ccc;
+}
+#save-profile-btn:hover {
+    border-top: 3px solid #FAEDB8;
+}
+#edit-rem-btn{
+    border-top: 3px solid #ccc;
+    background: #47cf71;
+}
+#edit-rem-btn:hover{
+    border-top: 3px solid #FAEDB8;
+}
+.reminder-btn-active{
+    background: #47cf73 !important;
+}
+h2.settings-title{
+    border-bottom: 3px solid #FAEDB8;
+    margin-bottom: 25px;
+}
