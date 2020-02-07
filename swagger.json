@@ -418,7 +418,7 @@
     "LoginResponse": {
       "type": "object",
       "properties": {
-        "fullname": {
+        "username": {
           "type": "string"
         },
         "email": {
@@ -435,7 +435,7 @@
     "User": {
       "type": "object",
       "required": [
-        "fullname",
+        "username",
         "email",
         "password"
       ],
@@ -444,7 +444,7 @@
           "type": "integer",
           "format": "int64"
         },
-        "fullname": {
+        "username": {
           "type": "string"
         },
         "email": {

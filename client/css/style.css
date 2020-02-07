@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Slab|Titillium+Web|Lato');
+
+img {
+  display: block;
+  width: 100%;
+}
+main {
+  margin: auto;
+  box-shadow: 30px 0px 40px rgba(0,0,0,0.2), 
+      -30px 0px 40px rgba (0,0,0,0.2);
+}
+
+#landing-image {
+  background: url('../images/landing.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  flex: 0 1 50vw;
+  height: 50vh;
+  margin: 0;
+}

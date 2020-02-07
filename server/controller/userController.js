@@ -83,7 +83,7 @@ class UserController extends ClientController{
   update(req, res, next) {
     const { username, email, } = req.body;
     const favouriteQuote = (Object.prototype.hasOwnProperty.call(req.body, 'fav_quote')) ? req.body.fav_quote : null;
-    const text = 'UPDATE users SET username=($1), email=($2), fav_quote=($3), updated_at=($4) WHERE id=($5) RETURNING id, fullname, email, fav_quote';
+    const text = 'UPDATE users SET username=($1), email=($2), fav_quote=($3), updated_at=($4) WHERE id=($5) RETURNING id, username, email, fav_quote';
     const values = [username, email, favouriteQuote, 'NOW()', req.userData.id];
     const query = {
       text,
