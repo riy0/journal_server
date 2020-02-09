@@ -2,7 +2,7 @@
 
 const usernameField = document.getElementById('username');
 const emailField = document.getElementById('email');
-const pswdField = document.getElementById('password');
+const passwordField = document.getElementById('password');
 const confirmPswdField = document.getElementById('confirm-password');
 const submitSignUp = document.getElementById('submit-signup');
 const submitLogin = document.getElementById('submit-login');
@@ -19,16 +19,16 @@ const signup = (e) => {
   const url = `${baseUrl}/auth/signup`;
   const username = usernameField.value.trim();
   const email = emailField.value.trim();
-  const pswd = pswdField.value.trim();
+  const password = passwordField.value.trim();
   const confirmPswd = confirmPswdField.value.trim();
-  const validationMsg = validateSignUp(username, email, pswd, confirmPswd);
+  const validationMsg = validateSignUp(username, email, password, confirmPswd);
 
   if (validationMsg.username.length !== 0 || validationMsg.email.length !== 0
-    || validationMsg.pswd.length !== 0 || validationMsg.confirmPswd.length !== 0) {
-    let errorMsgs = (validationMsg.username[0]) ? `<li>${(validationMsg.username[0])}</li>` : '';
-    errorMsgs += (validationMsg.email[0]) ? `<li>${(validationMsg.email[0])}</li>` : '';
-    errorMsgs += (validationMsg.pswd[0]) ? `<li>${(validationMsg.pswd[0])}</li>` : '';
-    errorMsgs += (validationMsg.confirmPswd[0]) ? `<li>${(validationMsg.confirmPswd[0])}</li>` : '';
+    || validationMsg.password.length !== 0 || validationMsg.confirmPassword.length !== 0) {
+    let errorMsgs = (validationMsg.username) ? `<li>${(validationMsg.username)}</li>` : '';
+    errorMsgs += (validationMsg.email) ? `<li>${(validationMsg.email)}</li>` : '';
+    errorMsgs += (validationMsg.pswd) ? `<li>${(validationMsg.password)}</li>` : '';
+    errorMsgs += (validationMsg.confirmPassword) ? `<li>${(validationMsg.confirmPassword)}</li>` : '';
     errMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
     errBoxElement.innerHTML = errMsgCode;
     return;
@@ -37,8 +37,9 @@ const signup = (e) => {
   const signUpData = {
     username,
     email,
-    pswd,
+    password,
   };
+
   const options = {
     method: 'POST',
     headers: {
@@ -47,20 +48,20 @@ const signup = (e) => {
     },
     body: JSON.stringify(signUpData),
   };
+
   fetch(url, options)
     .then((res) => res.json())
-    .then((result) => {
-      const { status, message, errors, } = result;
+    .then(({ status, message, errors, }) => {
       let errorMsgs = '';
-      if (result.status === 'success') {
+      if (status === 'success') {
         window.location = `${window.location.protocol}//${window.location.host}/client/login.html`;
       } else if (status === 'error') {
-        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+        if (errors) {
           errors.forEach((error) => {
             errorMsgs += `<li>${error}</li>`;
           });
           errMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
-        } else if (Object.prototype.hasOwnProperty.call(result, 'message')) {
+        } else if (message) {
           errorMsgs += `<li>${message}</li>`;
           errMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
         }
@@ -82,8 +83,8 @@ const login = (e) => {
   }
   const url = `${baseUrl}/auth/login`;
   const email = emailField.nodeValue.trim();
-  const pswd = pswdField.value.trim();
-  const validationMsg = validateLogin(email, pswd);
+  const password = passwordField.value.trim();
+  const validationMsg = validateLogin(email, password);
 
   if (validationMsg.email.length !== 0 || validationMsg.pswd.length !== 0) {
     let errorMsgs = (validationMsg.email[0]) ? `<li>${(validationMsg.email[0])}</li>` : '';
@@ -94,7 +95,7 @@ const login = (e) => {
 
   const loginData = {
     email,
-    pswd,
+    password,
   };
 
   const options = {
@@ -107,11 +108,22 @@ const login = (e) => {
   };
 
   fetch(url, options)
+    .then((res) => res.json())
     .then((result) => {
-      const { status, message, errors, } = result;
+      const {
+        status, message, errors, data,
+      } = result;
       let errorMsgs = '';
       if (status === 'success') {
-        setCookie('token', result.data.token, 2);
+        setCookie('token', data.token, 2);
+        const userData = {
+          username: data.username,
+          email: data.email,
+          favQutote: data.fav_quote,
+          entryCount: data.entryCount || null,
+        };
+        localStorage.setItem('user', JSON.stringify(userData));
+
         window.location = `${window.location.protocol}//${window.location.host}/client/list-entry.html`;
       } else if (status === 'error') {
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {

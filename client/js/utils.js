@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars, no-plusplus */
 
 // liveserver
 const baseUrl = 'http://127.0.0.1:3000/api/v1';
@@ -6,15 +6,15 @@ const baseUrl = 'http://127.0.0.1:3000/api/v1';
 const getCookie = (ckname) => {
   const name = `${ckname}=`;
   const decodedCookie = decodeURIComponent(document.cookie);
-  const ca = decodedCookie.split(';');
 
-  for (let i = 0; i < ca.length; i + 1) {
-    let c = ca[i];
-    while (c.charAt(0) === ' ') {
-      c = c.substring(1);
+  const ca = decodedCookie.split(';');
+  for (let index = 0; index < ca.length; index++) {
+    let cookieString = ca[index];
+    while (cookieString.charAt(0) === ' ') {
+      cookieString = cookieString.substring(1);
     }
-    if (c.indexOf(name) === 0) {
-      return c.substring(name.length, c.length);
+    if (cookieString.indexOf(name) === 0) {
+      return cookieString.substring(name.length, cookieString.length);
     }
   }
   return '';

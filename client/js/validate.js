@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable  no-useless-escape */
 
+const emailRegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
 const validateSignUp = (username, email, password, confirmPassword) => {
-  const emailRegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const message = {};
+
   message.username = [];
   message.email = [];
   message.password = [];
@@ -36,7 +38,6 @@ const validateSignUp = (username, email, password, confirmPassword) => {
 };
 
 const validateLogin = (email, password) => {
-  const emailRegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const message = {};
   message.email = [];
   message.password = [];
@@ -65,5 +66,5 @@ const validateEntryField = (title, content) => {
   if (content === '') {
     message.title.push('Content cannot be empty');
   }
-  return message
+  return message;
 };
