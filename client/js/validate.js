@@ -35,7 +35,6 @@ const validateSignUp = (username, email, password, confirmPassword) => {
   return message;
 };
 
-
 const validateLogin = (email, password) => {
   const emailRegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const message = {};
@@ -53,4 +52,18 @@ const validateLogin = (email, password) => {
     message.password.push('Password cannot be less than 6 characters');
   }
   return message;
+};
+
+const validateEntryField = (title, content) => {
+  const message = {};
+  message.title = [];
+  message.content = [];
+
+  if (title === '') {
+    message.title.push('Title cannot be empty');
+  }
+  if (content === '') {
+    message.title.push('Content cannot be empty');
+  }
+  return message
 };

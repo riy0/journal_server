@@ -67,8 +67,10 @@ const signup = (e) => {
         errBoxElement.innerHTML = errMsgCode;
       }
     })
-    .catch(() => {
-
+    .catch((err) => {
+      const message = `<li>${err}</li>`;
+      errMsgCode = `<ul id="error-msg">${message}</ul>`;
+      errBoxElement.innerHTML = errMsgCode;
     });
 };
 
@@ -124,7 +126,10 @@ const login = (e) => {
         errBoxElement.innerHTML = errMsgCode;
       }
     })
-    .catch(() => {
+    .catch((err) => {
+      const message = `<li>${err}</li>`;
+      errMsgCode = `<ul id="error-msg">${message}</ul>`;
+      errBoxElement.innerHTML = errMsgCode;
     });
 };
 
