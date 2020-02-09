@@ -30,3 +30,6 @@ yarn-error.log*
 
 #coveralls config
 .coveralls.yml
+
+#test
+test/

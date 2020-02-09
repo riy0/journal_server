@@ -1,4 +1,4 @@
-/* global baseUrl, checkCookie, getCookie, validateEntryField */
+/* global baseUrl, getOptions, validateEntryField */
 /* eslint-disable radix */
 const entrySubjectField = document.getElementById('write-subject');
 const entryContentField = document.getElementById('write-content');
@@ -14,24 +14,6 @@ const errBoxElement = document.getElementById('error-box');
 const floatingBtn = document.getElementById('floating-button');
 
 let errMsgCode;
-
-let token;
-if (checkCookie('token')) {
-  token = getCookie('token');
-}
-
-const getOptions = (method, payload) => {
-  const options = {
-    method,
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(payload),
-  };
-  return options;
-};
 
 const formatDate = (date) => {
   const d = new Date(date);

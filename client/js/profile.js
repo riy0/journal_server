@@ -1,5 +1,5 @@
-/* global baseUrl, checkCookie, getCookie, validateProfileField */
-const errBoxElement = document.getElementById('error-box');
+/* global baseUrl, getOptions, validateProfileField */
+const errBoxElement = document.getElementByName('error-box')[0];
 const profSettingsBox = document.getElementById('settings-box');
 const userNameHeading = document.getElementById('username-heading');
 const usernameField = document.getElementById('user-name');
@@ -10,11 +10,6 @@ const entriesCountField = document.getElementsByClassName('entries-count')[0];
 const editProfBtn = document.getElementById('edit-profile-btn');
 
 let errMsgCode;
-
-let token;
-if (checkCookie('token')) {
-  token = getCookie('token');
-}
 
 const displayProfile = () => {
   const userDetails = JSON.parse(localStorage.getItem('user'));
@@ -55,15 +50,8 @@ const updateProfile = (event) => {
     fav_quote: userFavQuote,
   };
 
-  const options = {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(editProfileData),
-  };
+  const options = getOptions('PUT', editProfileData);
+
   fetch(url, options)
     .then((res) => res.json())
     .then((result) => {

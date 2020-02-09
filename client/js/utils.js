@@ -34,3 +34,21 @@ const setCookie = (ckname, ckvalue, exdays) => {
   const expires = `expires=${date.toUTCString()}`;
   document.cookie = `${ckname}=${ckvalue};${expires};path=/`;
 };
+
+let token;
+if (checkCookie('token')) {
+  token = getCookie('token');
+}
+
+const getOptions = (method, payload) => {
+  const options = {
+    method,
+    headers: {
+      Accept: 'application/json, text/plain,  */*',
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  };
+  return options;
+};
