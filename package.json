@@ -15,7 +15,7 @@
     "dev": "nodemon --watch server --exec babel-node ./server/server",
     "lintfix": "eslint . --fix",
     "pretest": "eslint . && npm run build",
-    "start": "npm run build:dev && node ./dist/server",
+    "start": "npm run build && node ./dist/server",
     "test": "babel-node node_modules/mocha/bin/_mocha test/*.js --exit"
   },
   "author": "riy0",
