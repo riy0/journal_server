@@ -15,18 +15,19 @@ class AuthController extends ClientController{
         text: action,
         values,
       };
-      this._client.query(query).then((result) => {
-        res.status(201).json({
-          status: 'success',
-          data: result.rows[0],
+      this._client.query(query)
+        .then((result) => {
+          res.status(201).json({
+            status: 'success',
+            data: result.rows[0],
+          });
+        }).catch((e) => {
+          if (parseInt(e.code, 10) === 23505) {
+            e.status = 409;
+            e.message = 'an account with this email already exist';
+          }
+          next(e);
         });
-      }).catch((e) => {
-        if (parseInt(e.code, 10) === 23505) {
-          e.status = 409;
-          e.message = 'an account with this email already exist';
-        }
-        next(e);
-      });
     }).catch((err) => {
       next(err);
     });
@@ -34,7 +35,7 @@ class AuthController extends ClientController{
 
   login(req, res, next) {
     const { email, password, } = req.body;
-    this._client.query('SELECT id, username, email, password fav_quote FROM users WHERE email=($1)', [email])
+    this._client.query('SELECT id, username, email, password fav_quote FROM users WHERE email=($1)', [email.toLowerCase()])
       .then((result) => {
         if (result.rowCount > 0) {
           const data = result.rows[0];

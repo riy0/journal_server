@@ -3,10 +3,8 @@ import expressValidation from 'express-validation';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import router from './router/index';
 import swaggerDoc from '../swagger.json';
-
-global.fetch = fetch;
+import router from './router/index';
 
 const app = express();
 const port = process.env.PORT || 3000;
