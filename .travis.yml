@@ -1,26 +1,20 @@
 language: node_js
+services: postgresql
+env: 
+  global:
+    DATABASE_URL=	postgres://postgres:@localhost:4321/journaldbtest
+  - "8"
 node_js:
-  - "stable"
 install:
   - npm install
 before_script:
   - psql -c 'drop database if exists journaldbtest;' -U postgres
   - psql -c 'create database journaldbtest;' -U postgres
   - npm run db 
-# sudo: false 
 script: npm run pretest
-services: postgresql
-# postgres:
-#  adapter: postgresql
-#  database: journal_test
-#  username: postgres
-env: 
-  global:
-    DATABASE_URL=	postgres://postgres:@localhost:4321/journaldbtest
-#    - PGPORT=4321
-#    - DATABASE_URL=<% ENV.fetch('DATABASE_URL', 'postgresql://localhost:4321/journal_test') %>
+after_success:
+  - npm run coveralls
 cache:
   directories:
     - "node_modules"
-after_success:
-  - npm run coveralls
+sudo: false

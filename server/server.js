@@ -1,13 +1,14 @@
-import bodyParser from 'body-parser';
 import express from 'express';
 import expressValidation from 'express-validation';
+import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDoc from '../swagger.json';
 import router from './router/index';
+import swaggerDoc from '../swagger.json';
+
+global.fetch = fetch;
 
 const app = express();
-
 const port = process.env.PORT || 3000;
 
 app.use(morgan('dev'));
@@ -25,7 +26,6 @@ app.all('/*', (req, res, next) => {
   }
 });
 
-// to trim body values posted
 app.use((req, res, next) => {
   const keys = Object.keys(req.body);
   keys.forEach((val) => {
