@@ -68,3 +68,21 @@ const validateEntryField = (title, content) => {
   }
   return message;
 };
+
+const validateProfileField = (userName, email, favQuote) => {
+  const message = {};
+  message.userName = [];
+  message.email = [];
+  message.favQuote = [];
+  if (userName === '') {
+    message.userName.push('username cannot be empty');
+  }
+  if (email === '') {
+    message.email.push('email cannot be empty');
+  }
+  if (favQuote === '') {
+    message.userName.push('favQuote cannot be empty');
+  }
+
+  return message;
+};
