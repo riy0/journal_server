@@ -11,7 +11,8 @@ before_script:
   - psql -c 'drop database if exists journaldbtest;' -U postgres
   - psql -c 'create database journaldbtest;' -U postgres
   - npm run db 
-script: npm run pretest
+  - npm run pretest
+script: npm run test
 after_success:
   - npm run coveralls
 cache:

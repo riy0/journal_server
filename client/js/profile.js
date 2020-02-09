@@ -28,7 +28,7 @@ const displayProfile = () => {
 
 const updateProfile = (event) => {
   event.preventDefault();
-  const url = `${baseUrl}/auth/updateuser`;
+  const url = `${baseUrl}/users/updateuser`;
   const userName = usernameField.value;
   const userEmail = emailField.value;
   const userFavQuote = favQuoteTextField.value;

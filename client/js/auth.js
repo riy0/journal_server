@@ -116,13 +116,6 @@ const login = (e) => {
       let errorMsgs = '';
       if (status === 'success') {
         setCookie('token', data.token, 2);
-        const userData = {
-          username: data.username,
-          email: data.email,
-          favQutote: data.fav_quote,
-          entryCount: data.entryCount || null,
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
 
         window.location = `${window.location.protocol}//${window.location.host}/client/list-entry.html`;
       } else if (status === 'error') {

@@ -383,7 +383,7 @@
     "UserRequest": {
       "type": "object",
       "properties": {
-        "fulname": {
+        "username": {
           "type": "string"
         },
         "email": {
@@ -405,10 +405,12 @@
       ],
       "properties": {
         "email": {
-          "type": "string"
+          "type": "string",
+          "example": "hoge@example.com"
         },
         "password": {
-          "type": "string"
+          "type": "string",
+          "example": "hogehoge"
         }
       },
       "xml": {
@@ -419,10 +421,12 @@
       "type": "object",
       "properties": {
         "username": {
-          "type": "string"
+          "type": "string",
+          "example": "hoge"
         },
         "email": {
-          "type": "string"
+          "type": "string",
+          "example": "hoge@example.com"
         },
         "token": {
           "type": "string"
